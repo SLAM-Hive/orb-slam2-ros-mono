@@ -25,3 +25,4 @@ lib/
 image.tar
 visualization.txt
 record.md
+ORB_SLAM2/Vocabulary/ORBvoc.txt
