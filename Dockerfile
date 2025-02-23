@@ -51,4 +51,4 @@ RUN apt-get update && apt-get install -y \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* 
 # RUN pip3 install pyyaml
-RUN pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pyyaml
+RUN pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pyyaml==6.0

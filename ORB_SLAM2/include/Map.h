@@ -20,7 +20,7 @@
 
 #ifndef MAP_H
 #define MAP_H
-
+#include "Converter.h"
 #include "MapPoint.h"
 #include "KeyFrame.h"
 #include <set>
@@ -38,6 +38,8 @@ class KeyFrame;
 class Map
 {
 public:
+
+
     Map();
 
     void AddKeyFrame(KeyFrame* pKF);
@@ -65,6 +67,9 @@ public:
 
     // This avoid that two points are created simultaneously in separate threads (id conflict)
     std::mutex mMutexPointCreation;
+
+    // ADD
+    void Save( const string &filename );
 
 protected:
     std::set<MapPoint*> mspMapPoints;

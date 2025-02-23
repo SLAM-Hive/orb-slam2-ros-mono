@@ -130,4 +130,57 @@ void Map::clear()
     mvpKeyFrameOrigins.clear();
 }
 
+// 保存地图时，保存为pcd格式，需要的信息如下
+/**
+    # .PCD v0.7 - Point Cloud Data file format
+    VERSION 0.7
+    FIELDS x y z
+    SIZE 4 4 4
+    TYPE F F F
+    COUNT 1 1 1
+    WIDTH 512
+    HEIGHT 1
+    VIEWPOINT 0 0 0 1 0 0 0
+    POINTS 2
+    DATA ascii
+    -0.00529 0.1235 0.8473
+    0.03254 -0.1234 0.9312
+*/
+void Map::Save ( const string& filename )
+ {
+    cerr<<"Map Saving to "<<filename <<endl;
+    unsigned long int nMapPoints = mspMapPoints.size();
+
+    ofstream f;
+    f.open(filename.c_str());
+    //写入基本信息
+    f << "# .PCD v0.7 - Point Cloud Data file format" << endl;
+    f << "VERSION 0.7" << endl;
+    f << "FIELDS x y z" << endl;
+    f << "SIZE 4 4 4" << endl;
+    f << "TYPE F F F" << endl;
+    f << "COUNT 1 1 1" << endl;
+    f << "WIDTH " << nMapPoints << endl;
+    f << "HEIGHT 1" << endl;
+    f << "VIEWPOINT 0 0 0 1 0 0 0" << endl;
+    f << "POINTS " << nMapPoints << endl;
+    f << "DATA ascii" << endl;
+    
+    // 写入点云数据
+    int temp_flag = 0;
+    for ( auto mp: mspMapPoints )
+    {
+        temp_flag++;
+
+        //遍历每一个点
+        cv::Mat mpWorldPos = mp->GetWorldPos();
+        f << mpWorldPos.at<float>(0) << " " << mpWorldPos.at<float>(1) << " " << mpWorldPos.at<float>(2);
+        if(temp_flag != nMapPoints) f << endl;
+             
+    }
+    f.close();
+
+
+    cerr<<"Map Saving Finished!"<<endl;
+ }
 } //namespace ORB_SLAM
